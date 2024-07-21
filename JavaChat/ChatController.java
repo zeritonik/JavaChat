@@ -30,8 +30,6 @@ public class ChatController {
         }
     }
 
-
-
     public void refreshMessagesLoop() {
         AnimationTimer at = new AnimationTimer() {
             public long last = 0;
@@ -57,7 +55,6 @@ public class ChatController {
         );
         chatField.setItems(ls);
     }
-
 
 
     private User user;

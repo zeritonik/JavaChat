@@ -40,7 +40,7 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <Arc fx:id="waiter" length="360.0" radiusX="25.0" radiusY="25.0" startAngle="90.0" stroke="BLACK" strokeMiterLimit="0.0" type="ROUND">
+      <Arc fx:id="waiter" length="360.0" radiusX="25.0" radiusY="25.0" startAngle="90.0" stroke="BLACK" strokeMiterLimit="0.0" type="ROUND" visible="false">
          <VBox.margin>
             <Insets bottom="15.0" top="8.0" />
          </VBox.margin>
