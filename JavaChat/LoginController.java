@@ -2,9 +2,9 @@ package JavaChat;
 
 import java.io.IOException;
 
-import javafx.animation.RotateTransition;
 import javafx.application.Platform;
-import javafx.concurrent.Task;
+import javafx.concurrent.*;
+import javafx.concurrent.Worker.State;
 import javafx.event.*;
 import javafx.fxml.*;
 import javafx.scene.*;
@@ -12,7 +12,6 @@ import javafx.scene.control.*;
 import javafx.scene.input.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import javafx.scene.shape.Arc;
 
 
@@ -22,41 +21,51 @@ public class LoginController {
     @FXML private TextField passwordField;
     @FXML private Text errorText;
 
-
     @FXML Arc waiter;
-    RotateTransition rt;
-    User user;
 
-    @FXML 
-    public void connectButtonPressed(ActionEvent e){     
-        Task<Integer> task = new Task<Integer>() {
-            LoginController con = LoginController.this;
+    Task<Void> loginTask;
 
-            @Override protected Integer call() throws IOException {
-                con.tryLoginUser();
-                return 0;
-            };
-        };
+    LoginLoadingAnimation animation;
 
-        task.run();
+    // called when all FXML fields are initialized
+    @FXML
+    public void initialize() {
+        loginTask = createLoginTask();
+        animation = new LoginLoadingAnimation(waiter);
     }
 
-    synchronized private void tryLoginUser() {
-        startLoadingAnimation();
-        user = new User(loginField.getText(), passwordField.getText());
+
+    @FXML 
+    public void connectButtonPressed(ActionEvent e){
+        if (loginTask.getState() != State.READY) 
+            return;
+
+        animation.start();
+
+        new Thread(loginTask).start();
+    }
+
+    private boolean tryLoginUser() {
+        User user = new User(loginField.getText(), passwordField.getText());
 
         if (!user.getState()) {
             errorText.setVisible(true);
-            stopLoadingAnimation();
-            return;
+            animation.stop();
+            return false;
         }
 
         Platform.runLater(() -> {
-            try { loadChat(); } catch ( IOException ex ) {};
+            try { 
+                loadChat(user); 
+            } catch ( IOException ex ) { 
+                loginTask = createLoginTask();
+            };
         });
+
+        return true;
     }
 
-    synchronized private void loadChat() throws IOException {
+    private void loadChat(User user) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("chat.fxml"));
         
         Parent parent = loader.load();
@@ -67,27 +76,22 @@ public class LoginController {
         ctrl.init(user);
 
         stage.setScene(scene);
-        stopLoadingAnimation();
-    }
-
-
-    public void startLoadingAnimation() {
-        waiter.setVisible(true);
-        rt = new RotateTransition(Duration.millis(1000), waiter);
-        rt.setFromAngle(0);
-        rt.setToAngle(359);
-        rt.setCycleCount(25);
-
-        rt.play();
-    }
-
-    public void stopLoadingAnimation() {
-        rt.stop();
-        waiter.setVisible(false);
+        animation.stop();
     }
 
 
     @FXML public void startedTyping(KeyEvent e) {
         errorText.setVisible(false);
+    }
+
+
+    Task<Void> createLoginTask() {
+        return new Task<Void>() {
+            @Override protected Void call() {
+                if (!tryLoginUser());
+                    loginTask = createLoginTask();
+                return null;
+            };
+        };
     }
 }

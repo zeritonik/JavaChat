@@ -21,6 +21,8 @@ public class JavaChat extends Application {
 
         stage.setTitle("JavaChat");
         stage.setScene(scene);
+        
+        loader.getController();
 
         stage.show();
     }
