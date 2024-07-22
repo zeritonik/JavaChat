@@ -10,7 +10,7 @@ import java.util.List;
 
 
 public class ChatDB {
-    private static final String url = "jdbc:mysql://localhost:3306/JavaChat";
+    private static final String url = "jdbc:mysql://46.19.67.80:3306/JavaChat";
     private Connection con;
 
     public boolean connect(String user, String password) {
