@@ -9,7 +9,7 @@ public class User {
     private String password;
 
     private int messagesStart;
-    private final int messagesCount=100;
+    public static final int messagesCount = 150;
 
     private boolean state;
 
@@ -23,7 +23,7 @@ public class User {
             return;
         }
         
-        messagesStart = Math.max(0, db.getTotalMessages() - messagesCount + messagesCount / 12);
+        toLastMessages();
     }
 
     public boolean connect() {
@@ -40,9 +40,7 @@ public class User {
     }
 
     public List<ChatMessage> getMessages() {
-        var res = db.getMessages(messagesCount, messagesStart);
-        messagesStart = Math.max(0, messagesStart + res.size() - messagesCount + messagesCount / 12);
-        return res;
+        return db.getMessages(messagesCount, messagesStart);
     }
 
     public boolean sendMessage(String content) {
@@ -54,5 +52,15 @@ public class User {
         message.sender = user;
         message.content = content;
         return db.postMessage(message);
+    }
+
+    public int moveMessageStart(int d) {
+        int old = messagesStart;
+        messagesStart = Math.max(0, Math.min(db.getTotalMessages() - messagesCount, messagesStart + d));
+        return messagesStart - old;
+    }
+
+    public void toLastMessages() {
+        messagesStart = Math.max(0, db.getTotalMessages() - messagesCount);
     }
 }

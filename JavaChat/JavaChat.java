@@ -9,6 +9,7 @@ import javafx.scene.*;
 public class JavaChat extends Application {
 
     public static void main(String[] args) {
+        ChatDB.loadDriver();
         launch(args);
     }
 

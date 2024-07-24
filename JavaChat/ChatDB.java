@@ -17,7 +17,7 @@ public class ChatDB {
         try {
             con = DriverManager.getConnection(url, user, password);
         } catch ( SQLException ex ) {
-            System.err.println("Can't connect");
+            System.err.println("Can't connect\n" + ex);
             return false;
         }
         return true;
@@ -34,7 +34,7 @@ public class ChatDB {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch ( ClassNotFoundException ex) {
-            System.err.println("Can't load driver");
+            System.err.println("Can't load driver\n" + ex);
             return false;
         }
         return true;
@@ -75,7 +75,7 @@ public class ChatDB {
                 messages.add(new ChatMessage(rs));
             }
         } catch ( SQLException ex) {
-            System.err.println("Can't use getMessages");
+            System.err.println("Can't use getMessages\n" + ex);
             return messages;
         }
 
