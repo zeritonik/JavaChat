@@ -1,0 +1,10 @@
+.root {
+    element-color1: #6AD4DD;
+    element-color2: #7AA2E3;
+    text-color: #F8F6E3;
+    back-color: #97E7E1;
+
+    -fx-background-color: back-color;
+
+    -fx-font-size: 17px;
+}

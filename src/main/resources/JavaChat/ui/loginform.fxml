@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Arc?>
+<?import javafx.scene.text.Text?>
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="350.0" style="-fx-border-width: 2; -fx-border-color: grey;" stylesheets="@chat.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="JavaChat.LoginController">
+   <children>
+      <Separator orientation="VERTICAL" prefHeight="70.0" prefWidth="6.0" visible="false" />
+      <Label id="chatLabel" prefHeight="115.0" prefWidth="326.0" text="Welcome to JavaChat!" textAlignment="CENTER" wrapText="true" />
+      <Separator orientation="VERTICAL" prefHeight="61.0" prefWidth="19.0" visible="false" />
+      <TextField fx:id="loginField" onKeyTyped="#startedTyping" promptText="логин" VBox.vgrow="SOMETIMES" />
+      <Separator orientation="VERTICAL" prefHeight="79.0" prefWidth="7.0" visible="false" />
+      <TextField fx:id="passwordField" onKeyTyped="#startedTyping" promptText="пароль" VBox.vgrow="SOMETIMES" />
+      <Separator orientation="VERTICAL" prefHeight="68.0" prefWidth="0.0" visible="false" />
+      <Text fx:id="errorText" fill="#bf3121" strokeType="OUTSIDE" strokeWidth="0.0" text="Неверный логин, или пароль" visible="false" />
+      <Button mnemonicParsing="false" onAction="#connectButtonPressed" text="Connect" />
+      <TilePane alignment="CENTER" maxWidth="-Infinity" prefTileHeight="50.0" VBox.vgrow="NEVER">
+         <VBox.margin>
+            <Insets bottom="15.0" top="8.0" />
+         </VBox.margin>
+         <children>
+            <Arc fx:id="waiter" centerY="25.0" length="180.0" radiusX="20.0" radiusY="20.0" smooth="false" stroke="BLACK" strokeLineJoin="ROUND" strokeMiterLimit="0.0" strokeWidth="1.1" type="ROUND" visible="false" TilePane.alignment="CENTER">
+               <effect>
+                  <Blend opacity="0.0" />
+               </effect>
+               <fill>
+                  <LinearGradient endX="1.0" endY="1.0" startY="0.8761904761904762">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.1605689525604248" green="0.08905945718288422" blue="0.5657894611358643" opacity="0.28999999165534973" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </fill>
+            </Arc>
+         </children>
+      </TilePane>
+   </children>
+   <padding>
+      <Insets bottom="6.0" left="8.0" right="8.0" top="6.0" />
+   </padding>
+</VBox>
