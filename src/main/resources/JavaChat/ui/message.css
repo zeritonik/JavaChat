@@ -1,0 +1,43 @@
+@import url("user_style.css");
+
+.root {
+}
+
+.message-vbox {
+    -fx-background-radius: 10px;
+    -fx-background-color: element-color2;
+    -fx-padding: 0.5em;
+
+    -fx-border-color: derive(element-color2, -20%);
+    -fx-border-width: 1.5px;
+    -fx-border-radius: 10px;
+
+    -fx-min-width: 200px;
+    -fx-max-width: 600px;
+
+    -fx-spacing: 10px;
+}
+
+.message-vbox .label {
+    -fx-text-fill: text-color;
+}
+
+.message-label {
+    -fx-background-color: transparent;
+    -fx-wrap-text: true;
+}
+
+.message-vbox .container {
+    -fx-hgap: 7px;
+}
+
+.sender-label {
+    -fx-font-size: 0.8em;
+    -fx-background-color: transparent;
+    -fx-underline: true;
+}
+
+.date-label {
+    -fx-font-size: 0.8em;
+    -fx-background-color: transparent;
+}

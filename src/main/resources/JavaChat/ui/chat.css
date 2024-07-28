@@ -1,7 +1,7 @@
-@import url("style1.css");
+@import url("user_style.css");
 
 .root {
-    -fx-padding: 0px 10px 10px 10px;
+    -fx-padding: 10px;
 }
 
 .vbox {
@@ -9,7 +9,7 @@
 }
 
 
-.menu-bar {
+/* .menu-bar {
     -fx-font-size: 14px;
     -fx-background-color: transparent;
 }
@@ -55,7 +55,7 @@
 
 .menu-bar .context-menu {
     -fx-spacing: 3px;
-}
+} */
 
 
 
@@ -81,22 +81,11 @@
     -fx-background-color: transparent;
     -fx-padding: 5px 100px 5px 5px;
 
-    -fx-min-width: 600px;
-    -fx-pref-width: 600px;
-    -fx-max-width: 600px;
+    -fx-pref-width: 0;
 }
 
 .list-view .list-cell:empty {
     visibility: hidden;
-}
-
-.list-view .list-cell .label {
-    -fx-background-radius: 10px;
-    -fx-background-color: element-color2;
-    -fx-padding: 0.5em;
-
-    -fx-text-fill: text-color;
-    -fx-wrap-text: true;
 }
 
 .list-view .scroll-bar .increment-button,

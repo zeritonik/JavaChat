@@ -8,6 +8,7 @@ import javafx.concurrent.Worker.State;
 import javafx.event.*;
 import javafx.fxml.*;
 import javafx.scene.*;
+import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.scene.input.*;
 import javafx.scene.text.Text;
@@ -16,7 +17,7 @@ import javafx.scene.shape.Arc;
 
 
 
-public class LoginController {
+public class LoginController extends VBox {
     @FXML private TextField loginField;
     @FXML private TextField passwordField;
     @FXML private Text errorText;
@@ -28,6 +29,16 @@ public class LoginController {
     LoginLoadingAnimation animation;
 
     // called when all FXML fields are initialized
+    public LoginController() throws IOException {
+        super();
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("ui/loginform.fxml"));
+        loader.setRoot(this);
+        loader.setController(this);
+
+        loader.load();
+    }
+
     @FXML
     public void initialize() {
         loginTask = createLoginTask();
@@ -58,7 +69,9 @@ public class LoginController {
             try { 
                 loadChat(user); 
             } catch ( IOException ex ) { 
+                System.err.println("Error loading chat: " + ex);
                 loginTask = createLoginTask();
+                animation.stop();
             };
         });
 
@@ -66,17 +79,12 @@ public class LoginController {
     }
 
     private void loadChat(User user) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("ui/chat.fxml"));
-        
-        Parent parent = loader.load();
+        Parent parent = new ChatController(user);
         Scene scene = new Scene(parent);
         Stage stage = (Stage)loginField.getScene().getWindow();
 
-        ChatController ctrl = loader.getController();
-        ctrl.init(user);
-
-        stage.setScene(scene);
         animation.stop();
+        stage.setScene(scene);
     }
 
 

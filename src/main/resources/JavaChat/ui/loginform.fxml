@@ -14,7 +14,7 @@
 <?import javafx.scene.shape.Arc?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="350.0" style="-fx-border-width: 2; -fx-border-color: grey;" stylesheets="@chat.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="JavaChat.LoginController">
+<fx:root alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="350.0" style="-fx-border-width: 2; -fx-border-color: grey;" stylesheets="@chat.css" type="VBox" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Separator orientation="VERTICAL" prefHeight="70.0" prefWidth="6.0" visible="false" />
       <Label id="chatLabel" prefHeight="115.0" prefWidth="326.0" text="Welcome to JavaChat!" textAlignment="CENTER" wrapText="true" />
@@ -57,4 +57,4 @@
    <padding>
       <Insets bottom="6.0" left="8.0" right="8.0" top="6.0" />
    </padding>
-</VBox>
+</fx:root>

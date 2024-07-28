@@ -2,56 +2,78 @@ package JavaChat;
 
 import javafx.event.*;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.stage.Stage;
 import javafx.scene.control.*;
 import javafx.scene.control.skin.VirtualFlow;
 import javafx.scene.input.*;
-import javafx.scene.paint.*;
-import javafx.scene.text.Text;
+import javafx.scene.layout.*;
 import javafx.util.Callback;
 import javafx.animation.AnimationTimer;
 
-
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
-public class ChatController {
-    class MessageCell extends ListCell<String> {
-        private Label graphic = new Label();
+public class ChatController extends VBox{
+    class MessageCell extends ListCell<ChatMessage> {
+        private AnchorPane root;
+        private Label messageLabel;
+        private Label senderLabel;
+        private Label dateLabel;
 
         public MessageCell() {
+            try {
+                root = (AnchorPane)FXMLLoader.load(getClass().getResource("ui/messagecell.fxml"));
+            } catch (IOException e) {
+                System.err.println("Can't load MessageCell resource: " + e);
+            }
+            messageLabel = (Label)root.lookup(".message-label");
+            senderLabel = (Label)root.lookup(".sender-label");
+            dateLabel = (Label)root.lookup(".date-label");
+            setGraphic(root);
+
+            VBox vb = ((VBox)root.lookup(".message-vbox"));
         }
 
-        @Override protected void updateItem(String item, boolean empty) {
+        @Override protected void updateItem(ChatMessage item, boolean empty) {
             super.updateItem(item, empty);
             
             if (empty)
                 return;
 
-            setGraphic(graphic);
-            graphic.setText(item);
+            final SimpleDateFormat dformat = new SimpleDateFormat("HH:mm");
+
+            messageLabel.setText(item.content);
+            senderLabel.setText(item.sender);
+            dateLabel.setText(dformat.format(item.date_time));
         }
     }
 
-    @FXML Menu styleMenu;
-
     @FXML private TextField messageField;
 
-    @FXML private ListView<String> chatField;
+    @FXML private ListView<ChatMessage> chatField;
 
     private User user;
     private AnimationTimer refreshMessagesTimer;
 
-    public void init(User user) {
+    public ChatController(User user) throws IOException {
+        super();
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("ui/chat.fxml"));
+        loader.setRoot(this);
+        loader.setController(this);
+        loader.load();
+
         this.user = user;
     }
 
     @FXML
     public void initialize() {
         // chatCellFactory
-        chatField.setCellFactory(new Callback<ListView<String>,ListCell<String>>() {
-            @Override public ListCell<String> call(ListView<String> lv) {
+        chatField.setCellFactory(new Callback<ListView<ChatMessage>, ListCell<ChatMessage>>() {
+            @Override public ListCell<ChatMessage> call(ListView<ChatMessage> lv) {
                 return new MessageCell();
             }
         });
@@ -83,6 +105,10 @@ public class ChatController {
         refreshMessagesTimer.start();
     }
 
+    public void showMessages(List<ChatMessage> messages) {
+        chatField.getItems().setAll(user.getMessages());
+    }
+
     @FXML public void sendButtonPressed(ActionEvent e) {
         user.sendMessage(messageField.getText());
         user.toLastMessages();
@@ -96,18 +122,5 @@ public class ChatController {
         if (e.getCode() == KeyCode.ENTER){
             sendButtonPressed(null);
         }
-    }
-
-    public void showMessages(List<ChatMessage> messages) {
-        final SimpleDateFormat dformat = new SimpleDateFormat("HH:mm:ss");
-        chatField.getItems().setAll(
-            messages.stream().map( 
-            (ChatMessage mes) -> { 
-                return String.format("[%s] %s - %s",  dformat.format(mes.date_time),  mes.sender, mes.content); 
-            }).collect(Collectors.toList()) 
-        );
-    }
-
-    @FXML public void chooseStyle(ActionEvent e) {
     }
 }

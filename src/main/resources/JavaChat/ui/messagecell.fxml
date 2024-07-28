@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxWidth="-Infinity" stylesheets="@message.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox styleClass="message-vbox" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label styleClass="message-label" text="text of someones message" />
+            <TilePane alignment="BOTTOM_RIGHT" prefColumns="2" prefRows="1" styleClass="container" tileAlignment="BOTTOM_RIGHT">
+               <children>
+                  <Label styleClass="sender-label" text="Sender" />
+                  <Label styleClass="date-label" text="Date" />
+               </children>
+            </TilePane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
