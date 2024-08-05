@@ -1,0 +1,5 @@
+@import url("JavaChat.css");
+
+.list-view .list-cell {
+    -fx-padding: 5px;
+}

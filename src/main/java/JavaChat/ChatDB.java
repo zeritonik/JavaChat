@@ -30,7 +30,7 @@ public class ChatDB {
         } catch ( NullPointerException ex) {}
     }
     
-    protected static boolean loadDriver() {  
+    public static boolean loadDriver() {  
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch ( ClassNotFoundException ex) {
@@ -40,8 +40,8 @@ public class ChatDB {
         return true;
     }
 
-    public int getTotalMessages() {
-        String query = "SELECT count(*) FROM JavaChat.chat;";
+    public int getTotalMessages(int chat) {
+        String query = String.format("CALL getTotalMessages(%d)", chat);
 
         int count = 0;
         ResultSet rs;
@@ -51,19 +51,14 @@ public class ChatDB {
             rs.next();
             count = rs.getInt(1);
         } catch ( SQLException ex) {
-            System.err.println("Can't use getTotalMessages");
+            System.err.println("Can't getTotalMessages: " + ex);
         }
 
         return count;
     }
 
-    public List<ChatMessage> getMessages(int count, int from) {
-        String query = String.format(
-            "SELECT * FROM JavaChat.chat\n" +
-            "ORDER BY date_time\n" +
-            "LIMIT %d OFFSET %d;", 
-            count, from
-        );
+    public List<ChatMessage> getMessages(int chat, int lim, int off) {
+        String query = String.format("CALL getMessages(%d, %d, %d)", chat, lim, off);
 
         List<ChatMessage> messages = new LinkedList<ChatMessage>();
         ResultSet rs;
@@ -75,7 +70,7 @@ public class ChatDB {
                 messages.add(new ChatMessage(rs));
             }
         } catch ( SQLException ex) {
-            System.err.println("Can't use getMessages\n" + ex);
+            System.err.println("Can't getMessages\n" + ex);
             return messages;
         }
 
@@ -83,17 +78,90 @@ public class ChatDB {
     }
 
     public boolean postMessage(ChatMessage message) {
-        String query = String.format(
-            "INSERT INTO JavaChat.chat(sender, content)\n" +
-            "VALUES (\"%s\", \"%s\");",
-            message.sender, message.content
-        );
+        String query = String.format("CALL insertMessage(\"%s\", %d)", message.content, message.chat);
 
         try {
             Statement st = con.createStatement();
             st.executeUpdate(query);
         } catch ( SQLException ex) {
-            System.err.println("Can't use postMessage" + ' ' + ex.toString());
+            System.err.println("Can't postMessage" + ' ' + ex);
+            return false;
+        }
+
+        return true;
+    }
+
+    public List<ChatChat> getChats() {
+        String query = String.format("CALL getUserChats()");
+
+        List<ChatChat> res = new LinkedList<ChatChat>();
+        try {
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(query);
+
+            while (rs.next()) {
+                res.add(new ChatChat(rs));
+            }
+        } catch ( SQLException ex ) {
+            System.err.println("Can't getChats: " + ex);
+        }
+
+        return res;
+    }
+
+    public List<String> getChatMembers(int chat) {
+        String query = String.format("CALL getChatMembers(%d)", chat);
+
+        List<String> res = new LinkedList<String>();
+        try {
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(query);
+
+            while (rs.next())
+                res.add(rs.getString(1));
+        } catch ( SQLException ex ) {
+            System.err.println("Can't getChatMembers: " + ex);
+        }
+
+        return res;
+    }
+
+    public boolean createChat(ChatChat chat) {
+        String query = String.format("CALL createChat('%s')", chat.chat_name);
+
+        try {
+            Statement st = con.createStatement();
+            st.executeQuery(query);
+        } catch ( SQLException ex ) {
+            System.err.println("Can't createChat: " + ex);
+            return false;
+        }
+
+        return true;
+    } 
+
+    public boolean addChatMember(ChatChat chat, String member) {
+        String query = String.format("CALL addChatMember(%d, '%s')", chat.id, member);
+
+        try {
+            Statement st = con.createStatement();
+            st.executeQuery(query);
+        } catch ( SQLException ex ) {
+            System.err.println("Can't addChatMember: " + ex);
+            return false;
+        }
+
+        return true;
+    }
+
+    public boolean removeChatMember(ChatChat chat, String member) {
+        String query = String.format("CALL removeChatMember(%d, '%s')", chat.id, member);
+
+        try {
+            Statement st = con.createStatement();
+            st.executeQuery(query);
+        } catch ( SQLException ex ) {
+            System.err.println("Can't removeChatMember: " + ex);
             return false;
         }
 

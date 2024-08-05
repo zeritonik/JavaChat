@@ -17,7 +17,7 @@
 <fx:root alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="350.0" style="-fx-border-width: 2; -fx-border-color: grey;" stylesheets="@chat.css" type="VBox" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Separator orientation="VERTICAL" prefHeight="70.0" prefWidth="6.0" visible="false" />
-      <Label id="chatLabel" prefHeight="115.0" prefWidth="326.0" text="Welcome to JavaChat!" textAlignment="CENTER" wrapText="true" />
+      <Label prefHeight="115.0" prefWidth="326.0" styleClass="capital-label" text="Welcome to JavaChat!" textAlignment="CENTER" wrapText="true" />
       <Separator orientation="VERTICAL" prefHeight="61.0" prefWidth="19.0" visible="false" />
       <TextField fx:id="loginField" onKeyTyped="#startedTyping" promptText="логин" VBox.vgrow="SOMETIMES" />
       <Separator orientation="VERTICAL" prefHeight="79.0" prefWidth="7.0" visible="false" />

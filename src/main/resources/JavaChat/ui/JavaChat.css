@@ -1,0 +1,145 @@
+@import url("user_style.css");
+
+
+.vbox {
+    -fx-background-color: transparent;
+    -fx-spacing: 7px;
+}
+
+.hbox {
+    -fx-background-color: transparent;
+    -fx-spacing: 10px;
+}
+
+
+.label {
+    -fx-background-color: element-color1;
+    -fx-background-radius: 10px;
+    -fx-text-fill: text-color;
+}
+
+.capital-label {
+    -fx-background-color: element-color1;
+    -fx-background-radius: 10px;
+    -fx-padding: 0px 8px 0px 8px;
+
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+
+    -fx-text-fill: text-color;
+}
+
+.text-field {
+    -fx-background-radius: 10px;
+    -fx-background-color: element-color1;
+
+    -fx-text-fill: text-color;
+    -fx-prompt-text-fill: element-color2;
+}
+
+.text-field:hover {
+    -fx-background-color: derive(element-color1, 20%);
+}
+
+
+.button {
+    -fx-background-color: element-color1;
+    -fx-text-fill: text-color;
+
+    -fx-background-radius: 10px;
+}
+
+.button:armed {
+    -fx-background-color: element-color2;
+}
+
+.button:hover {
+    -fx-background-color: derive(element-color1, 20%);
+}
+
+
+.toggle-button {
+    -fx-text-fill: text-color;
+    -fx-background-color: element-color1;
+    -fx-background-radius: 10px;
+}
+
+.toggle-button:hover {
+    -fx-background-color: derive(element-color1, 20%);
+}
+
+.toggle-button:selected {
+    -fx-background-color: element-color2;
+}
+
+
+.radio-button {
+    -fx-text-fill: text-color;
+    -fx-background-color: element-color1;
+    -fx-background-radius: 10px;
+}
+
+.radio-button:hover {
+    -fx-background-color: derive(element-color1, 20%);
+}
+
+.radio-button:selected {
+    -fx-background-color: element-color2;
+}
+
+
+.radio-button .radio {
+    visibility: hidden;
+    -fx-pref-width: 0;
+    -fx-pref-height: 0;
+}
+
+
+.split-pane-divider {
+    -fx-pref-width: 3px;
+    -fx-padding: 0px;
+    -fx-background-color: derive(element-color1, -10%);
+    -fx-background-radius: 10px;
+    -fx-opacity: 0.7;
+}
+
+
+.list-view {
+    -fx-background-radius: 15px;
+    -fx-background-color: element-color1;
+    -fx-padding: 5px;
+}
+
+
+.list-view .scroll-bar .increment-button,
+.list-view .scroll-bar .decrement-button,
+.list-view .scroll-bar .increment-arrow,
+.list-view .scroll-bar .decrement-arrow {
+    visibility: hidden;
+    -fx-padding: 2px;
+}
+
+.list-view .scroll-bar .track-background {
+    -fx-background-color: element-color1;
+}
+
+.list-view .scroll-bar .thumb {
+    -fx-background-color: element-color2;
+    -fx-background-radius: 10px;
+    -fx-opacity: 0.7;
+    -fx-border-color: transparent;
+}
+
+.list-view .corner {
+    -fx-background-color: transparent;
+}
+
+.list-view .list-cell {
+    -fx-background-color: transparent;
+
+    -fx-pref-width: 0;
+}
+
+.list-view .list-cell:empty {
+    visibility: hidden;
+}

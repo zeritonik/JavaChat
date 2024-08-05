@@ -1,4 +1,4 @@
-@import url("user_style.css");
+@import url("JavaChat.css");
 
 .root {
 }
@@ -11,9 +11,6 @@
     -fx-border-color: derive(element-color2, -20%);
     -fx-border-width: 1.5px;
     -fx-border-radius: 10px;
-
-    -fx-min-width: 200px;
-    -fx-max-width: 600px;
 
     -fx-spacing: 10px;
 }

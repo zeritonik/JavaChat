@@ -10,6 +10,7 @@ public class ChatMessage {
     public String sender;
     public Timestamp date_time;
     public String content;
+    public int chat;
 
     public ChatMessage() {
         emptyInit();
@@ -21,6 +22,7 @@ public class ChatMessage {
             sender = rs.getString("sender");
             date_time = rs.getTimestamp("date_time");
             content = rs.getString("content");
+            chat = rs.getInt("chat");
         } catch ( SQLException ex ) {
             System.out.println("Can't parse message data");
             emptyInit();

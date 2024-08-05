@@ -32,11 +32,16 @@ public class LoginController extends VBox {
     public LoginController() throws IOException {
         super();
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("ui/loginform.fxml"));
-        loader.setRoot(this);
-        loader.setController(this);
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ui/loginform.fxml"));
+            loader.setRoot(this);
+            loader.setController(this);
+            loader.load();
+        } catch ( IOException ex ) {
+            System.err.println("Can't load LoginController: " + ex);
+            throw ex;
+        }
 
-        loader.load();
     }
 
     @FXML
@@ -69,7 +74,7 @@ public class LoginController extends VBox {
             try { 
                 loadChat(user); 
             } catch ( IOException ex ) { 
-                System.err.println("Error loading chat: " + ex);
+                System.err.println("Error loading: " + ex);
                 loginTask = createLoginTask();
                 animation.stop();
             };
@@ -79,12 +84,13 @@ public class LoginController extends VBox {
     }
 
     private void loadChat(User user) throws IOException {
-        Parent parent = new ChatController(user);
+        Parent parent = new MainController(user);
         Scene scene = new Scene(parent);
-        Stage stage = (Stage)loginField.getScene().getWindow();
+        Stage stage = (Stage)this.getScene().getWindow();
 
         animation.stop();
         stage.setScene(scene);
+        stage.centerOnScreen();
     }
 
 

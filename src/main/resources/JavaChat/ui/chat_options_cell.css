@@ -1,0 +1,11 @@
+@import url("JavaChat.css");
+
+.hbox {
+    -fx-padding: 5px;
+    -fx-background-color: element-color2;
+    -fx-background-radius: 10px;
+}
+
+#memberLabel {
+    -fx-padding: 5px;
+}
